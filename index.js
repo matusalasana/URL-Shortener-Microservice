@@ -30,16 +30,18 @@ app.get('/api/hello', function(req, res) {
   res.json({ greeting: 'hello API' });
 });
 
-app.get("/api/shorturl/:id", (req, res) => {
-  const id = Number(req.params.id);
+app.get("/api/shorturl/:short_url", (req, res) => {
+  const shortUrl = Number(req.params.short_url);
 
-  const entry = urlDatabase.find(item => item.short_url === id);
+  const entry = urlDatabase.find(
+    item => item.short_url === shortUrl
+  );
 
   if (!entry) {
     return res.json({ error: "No short URL found" });
   }
 
-  res.redirect(entry.original_url);
+  return res.redirect(entry.original_url);
 });
 
 app.post("/api/shorturl", (req, res) => {
